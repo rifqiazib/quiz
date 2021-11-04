@@ -35,24 +35,39 @@ function getnamephone (){
 
 function showListHp(brand_slug){
     let ListHp = baseurl + "brands/" + brand_slug;
-    title.innerHTML = "List HP " + brand_slug + ListHp; 
+    title.innerHTML = "List HP "; 
     fetch(ListHp)
         .then(response => response.json())
         .then(resJson => {
             console.log(resJson.data.phones);
-            let phone = "";
+            let x = "";
             resJson.data.phones.forEach( list => {
-                let phone = "";
-                phone +=`
-                 nama : ${list.brand}
+                x +=`
+                <div class="card">
+                <div class="card-image">
+                <img src="${list.image}">
+                 <span class="card-title"></span>
+                 </div>
+        <div class="card-content">
+          <p> 
+                Merk    : ${list.brand} <br>
+                Tipe Hp : ${list.phone_name} <br>
+           </p>
+        </div>
+        
+      </div>   
                 `
+            })   
+            contents.innerHTML =` <ul class="collection"> ${x} `;
+            const detail = document.querySelectorAll('.spec');
+            detail.forEach(btn => {
+                btn.onclick = (event) => {
+                    showSpec(event.target.dataset.id);
+                }
             })
-            
-            
-        })
-        contents.innerHTML =` <ul class="collection"> ${phone} `;
-    
+        })  
 }
+
 
 document.addEventListener('DOMContentLoaded', function(){
     getnamephone();
